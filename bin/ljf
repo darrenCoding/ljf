@@ -1,0 +1,126 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var inquirer = require('inquirer');
+var extend   = require('extend');
+var path     = require('path');
+var fs       = require('fs');
+var args     = process.argv.slice(2);
+var commands = ['init','server','proxy','release','repo','config','root','help','man','build','minify','test','update','qrcode'];
+var argv = require('minimist')(args, {
+      alias: {
+        'help' : 'h',
+        'brower': 'b',
+        'port': 'p',
+        'version' : 'v',
+        'silent' : 's',
+        'root' : 'r'
+      },
+      string: ['port','root'],
+      boolean: ['brower','help','version','silent'],
+      unknown : function () {
+        if ( !~commands.indexOf(args[0]) ) {
+          console.error('[ERROR] the commander is illegal');
+          process.exit(1);
+        }
+      }
+    });
+
+
+if ( argv.h || argv.help ) {
+  process.stdout.write('\n' + [
+    'Usage: ljf [Command] [Options]',
+    '',
+    'Command:',
+    '',
+    '  init [lj_init]       Initialize a project' ,
+    '  server               Start up a static server',
+    '    -p                 Static server port [8030]',
+    '    -b                 Open brower automatically',
+    '  build                Transfer resourceMap.json into a resourceLoader.js',
+    '    dev                Build with test Environment',
+    '    online             Build with online Environment',
+    '  release              Release files',
+    '    -d                 Release the integral directory',
+    '    -m                 Release log',
+    '    -u                 Address of clear cache',
+    '    <file>             The file you want to release',
+    '  proxy                Start up a proxy server[default port is 80]',
+    '    -l                 Switch to local',
+    '    -t                 Switch to test',
+    '    -o                 Switch to online',
+    '  config               Config file',
+    '    -l                 List all',
+    '    <name> <value>     Set a variable',
+    '    <name>             Get a variable',
+    '  minify               Minify images',
+    '    <input>            Files to be optimized',
+    '    <output>           The destination folder to where your files will be written',
+    '  man                    ',
+    '    <command>          Name of command',
+    '  repo                 Open homepage',
+    '  root                 Display ljf root',
+    '  update               Up-to-date version',
+    '  qrcode               Create qrcode',
+    '',
+    'Options:',
+    '',
+    '  -h --help            Print help information',
+    '  -v --version         Get the version number',
+    '  -s --silent          Suppress log messages from output',
+    '  -c --cert            Path to https cert file [server.key]',
+    '  -k --key             Path to https key file [server.crt]',
+    '',
+    'Help:',
+    '',
+    'ljf help <commander>   Quick help on <commander>, will show more examples',
+    ''
+  ].join('\n') + '\n')
+  return;
+}
+
+var cjson = path.resolve(__dirname, "../", "config.json");
+var prompts_init = [
+  {
+    'type' : 'confirm',
+    'name' : 'iscur',
+    'message' : 'The current directory is the root of svn ?',
+    'default' : false
+  }
+]
+
+if ( !fs.existsSync(cjson) ) {
+  inquirer.prompt(prompts_init).then(function (answers) {
+    var records = answers,
+        prompts_on = [
+          {
+            'type' : 'input',
+            'name' : 'svnonline',
+            'message' : 'Please input the root of online svn'
+          }
+        ]
+    if ( !answers.iscur ) {
+      prompts_on.unshift({
+        'type' : 'input',
+        'name' : 'svndev',
+        'message' : 'Please input the root of test svn'
+      })
+    }
+    inquirer.prompt(prompts_on).then(function (as) {
+      extend(true, records, as);
+      /* pass the argv to main file */
+      require("../").init(argv, records);
+    })
+  })
+} else {
+  require("../").init(argv, {});
+}
+
+
+
+
+
+
+
+

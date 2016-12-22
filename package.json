@@ -1,0 +1,51 @@
+{
+  "name": "ljf",
+  "version": "1.0.0",
+  "main": "index.js",
+  "description": "Front-end integrated solution",
+  "keywords": [
+    "ljf",
+    "integrated",
+    "static",
+    "server"
+  ],
+  "bin": {
+    "ljf": "./bin/ljf"
+  },
+  "author": "linfang",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 5.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.leju.com/linfang3%2Fljf/tree/master"
+  },
+  "dependencies": {
+    "async": "^2.1.2",
+    "chalk": "^1.1.3",
+    "cross-spawn": "^5.0.1",
+    "extend": "^3.0.0",
+    "finalhandler": "^0.5.0",
+    "fs-extra": "^0.30.0",
+    "get-port": "^2.1.0",
+    "http-proxy": "^1.15.1",
+    "iconv-lite": "^0.4.13",
+    "imagemin": "^5.2.2",
+    "imagemin-gifsicle": "^5.1.0",
+    "imagemin-jpegtran": "^5.0.2",
+    "imagemin-optipng": "^5.2.1",
+    "imagemin-svgo": "^5.2.0",
+    "inquirer": "^1.1.3",
+    "lsofi": "^1.0.0",
+    "mime-types": "^2.1.12",
+    "minimist": "^1.2.0",
+    "opener": "^1.4.1",
+    "path-type": "^2.0.0",
+    "pretty-bytes": "^4.0.2",
+    "qr-image": "^3.1.0",
+    "serve-index": "^1.8.0",
+    "serve-static": "^1.11.1",
+    "static-combo": "^1.0.19"
+  }
+}

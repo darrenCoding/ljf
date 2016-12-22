@@ -1,0 +1,13 @@
+*.log
+
+.DS_Store
+
+npm-debug.log*
+
+node_modules
+
+cert
+
+demo
+
+config.json
