@@ -7,7 +7,7 @@ var extend   = require('extend');
 var path     = require('path');
 var fs       = require('fs');
 var args     = process.argv.slice(2);
-var commands = ['init','server','proxy','release','repo','config','root','help','man','build','minify','test','update','qrcode'];
+var commands = ['init','server','proxy','release','repo','config','hosts','root','help','man','build','minify','test','update','qrcode'];
 var argv = require('minimist')(args, {
       alias: {
         'help' : 'h',
@@ -50,9 +50,14 @@ if ( argv.h || argv.help ) {
     '    -l                 Switch to local',
     '    -t                 Switch to test',
     '    -o                 Switch to online',
+    '    -hosts             Use hosts',
     '  config               Config file',
     '    -l                 List all',
     '    <name> <value>     Set a variable',
+    '    <name>             Get a variable',
+    '  hosts                Hosts file',
+    '    -l                 List all',
+    '    -e                 Edit hosts file',
     '    <name>             Get a variable',
     '  minify               Minify images',
     '    <input>            Files to be optimized',
