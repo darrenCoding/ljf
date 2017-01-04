@@ -2,13 +2,13 @@
 
 'use strict';
 
-var inquirer = require('inquirer');
-var extend   = require('extend');
-var path     = require('path');
-var fs       = require('fs');
-var args     = process.argv.slice(2);
-var commands = ['init','server','proxy','release','repo','config','hosts','root','help','man','build','minify','test','update','qrcode'];
-var argv = require('minimist')(args, {
+const inquirer = require('inquirer');
+const extend   = require('extend');
+const path     = require('path');
+const fs       = require('fs');
+const args     = process.argv.slice(2);
+const commands = ['init','server','proxy','release','repo','config','hosts','root','help','man','build','minify','test','update','qrcode'];
+const argv = require('minimist')(args, {
       alias: {
         'help' : 'h',
         'brower': 'b',
@@ -19,7 +19,7 @@ var argv = require('minimist')(args, {
       },
       string: ['port','root'],
       boolean: ['brower','help','version','silent'],
-      unknown : function () {
+      unknown : () => {
         if ( !~commands.indexOf(args[0]) ) {
           console.error('[ERROR] the commander is illegal');
           process.exit(1);
@@ -85,8 +85,8 @@ if ( argv.h || argv.help ) {
   return;
 }
 
-var cjson = path.resolve(__dirname, "../", "config.json");
-var prompts_init = [
+let cjson = path.resolve(__dirname, "../", "config.json");
+let prompts_init = [
   {
     'type' : 'confirm',
     'name' : 'iscur',
@@ -96,8 +96,8 @@ var prompts_init = [
 ]
 
 if ( !fs.existsSync(cjson) ) {
-  inquirer.prompt(prompts_init).then(function (answers) {
-    var records = answers,
+  inquirer.prompt(prompts_init).then((answers) => {
+    let records = answers,
         prompts_on = [
           {
             'type' : 'input',
@@ -112,7 +112,7 @@ if ( !fs.existsSync(cjson) ) {
         'message' : 'Please input the root of test svn'
       })
     }
-    inquirer.prompt(prompts_on).then(function (as) {
+    inquirer.prompt(prompts_on).then((as) => {
       extend(true, records, as);
       /* pass the argv to main file */
       require("../").init(argv, records);
@@ -121,11 +121,3 @@ if ( !fs.existsSync(cjson) ) {
 } else {
   require("../").init(argv, {});
 }
-
-
-
-
-
-
-
-
