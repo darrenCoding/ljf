@@ -5,4 +5,3 @@
 'use strict';
 
 module.exports = require('./lib/ljf.js');
-console.log('test');
